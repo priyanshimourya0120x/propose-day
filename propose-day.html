@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Propose Day 💍</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  height:100vh;
+  background: linear-gradient(135deg,#ffe6f0,#dbeafe);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+/* OPEN BUTTON */
+.open-btn{
+  padding:18px 36px;
+  font-size:22px;
+  border:none;
+  border-radius:40px;
+  background:#ff4d8d;
+  color:white;
+  cursor:pointer;
+  animation:heartbeat 1.4s infinite;
+}
+
+@keyframes heartbeat{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(1)}
+}
+
+/* CARD */
+.card{
+  display:none;
+  width:360px;
+  background:white;
+  border-radius:30px;
+  padding:24px;
+  text-align:center;
+  box-shadow:0 30px 60px rgba(0,0,0,0.3);
+  animation:pop 1s ease forwards;
+}
+
+@keyframes pop{
+  from{transform:scale(0.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* HEADING */
+.heading{
+  font-size:26px;
+  font-weight:800;
+  background:linear-gradient(90deg,#ff4d8d,#7c3aed);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+  from{text-shadow:0 0 5px #ff4d8d}
+  to{text-shadow:0 0 15px #7c3aed}
+}
+
+/* NAME GLOW */
+.name{
+  font-size:22px;
+  color:#ff4d8d;
+  font-weight:700;
+  animation:nameGlow 1.5s infinite alternate;
+}
+
+@keyframes nameGlow{
+  from{text-shadow:0 0 5px #ffb3d1}
+  to{text-shadow:0 0 18px #ff4d8d}
+}
+
+/* ANIME CHARACTER */
+.character{
+  width:120px;
+  height:120px;
+  background:#fde68a;
+  border-radius:50%;
+  margin:15px auto;
+  position:relative;
+  animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+.eye{
+  width:14px;
+  height:14px;
+  background:#111;
+  border-radius:50%;
+  position:absolute;
+  top:40px;
+}
+.eye.left{left:35px}
+.eye.right{right:35px}
+
+.mouth{
+  width:30px;
+  height:16px;
+  border-bottom:4px solid #ff4d8d;
+  border-radius:0 0 30px 30px;
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.blush{
+  width:14px;
+  height:8px;
+  background:#fda4af;
+  border-radius:50%;
+  position:absolute;
+  top:60px;
+}
+.blush.left{left:18px}
+.blush.right{right:18px}
+
+/* LETTER */
+#letter{
+  font-size:15px;
+  color:#444;
+  min-height:120px;
+}
+
+/* BUTTONS */
+.buttons button{
+  padding:10px 22px;
+  border:none;
+  border-radius:25px;
+  margin:6px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.yes{background:#ff4d8d;color:white}
+.friend{background:#fde68a}
+
+/* RING */
+.ring{
+  position:absolute;
+  font-size:40px;
+  animation:ringPop 1s ease forwards;
+}
+
+@keyframes ringPop{
+  from{transform:scale(0);opacity:0}
+  to{transform:scale(1.2);opacity:1}
+}
+
+/* FIREWORKS */
+.spark{
+  position:absolute;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  animation:blast 1s ease-out forwards;
+}
+
+@keyframes blast{
+  from{transform:translate(0,0);opacity:1}
+  to{transform:translate(var(--x),var(--y));opacity:0}
+}
+
+.heart{
+  position:absolute;
+  font-size:18px;
+  animation:float 3s linear forwards;
+}
+
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-180px);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<button class="open-btn" onclick="openLetter()">💌 Open My Heart</button>
+
+<div class="card" id="card">
+
+  <div class="heading">Happy Propose Day 💍</div>
+  <div class="name">For You, ❤️ (You)</div>
+
+  <div class="character">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="blush left"></div>
+    <div class="blush right"></div>
+    <div class="mouth"></div>
+  </div>
+
+  <div id="letter"></div>
+
+  <div class="buttons">
+    <button class="yes" onclick="yesLove()">YES ❤️ I Love You</button>
+    <button class="friend" onclick="friends()">Hum hamesha dost reh sakte hain 💛</button>
+  </div>
+</div>
+
+<script>
+const text = `
+Hindi 💕
+Tum meri zindagi ka sabse khoobsurat ehsaas ho 💖
+
+in my language 🌸
+Jab bhi tum saath hoti ho,
+duniya perfect lagti hai 🥺✨
+
+Urdu 💌
+Tum meri duaon ka
+sabse khoobsurat jawab ho 💫
+
+Will you be mine? 💍
+`;
+
+let i=0;
+let celebration;
+
+function openLetter(){
+  document.querySelector('.open-btn').style.display='none';
+  document.getElementById('card').style.display='block';
+  typeText();
+}
+
+/* TYPING */
+function typeText(){
+  if(i<text.length){
+    document.getElementById('letter').innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeText,35);
+  }
+}
+
+/* YES */
+function yesLove(){
+  ring();
+  startCelebration();
+  whatsappShare("YES ❤️ She said YES! 💍💖");
+}
+
+/* FRIEND OPTION */
+function friends(){
+  alert("Respect always 💛 Dost rehna bhi khoobsurat hota hai 🙂");
+  whatsappShare("Hum hamesha dost rahenge 💛");
+}
+
+/* WHATSAPP SHARE */
+function whatsappShare(msg){
+  const url=`https://wa.me/?text=${encodeURIComponent(msg)}`;
+  window.open(url,'_blank');
+}
+
+/* RING */
+function ring(){
+  const r=document.createElement('div');
+  r.className='ring';
+  r.innerHTML='💍';
+  r.style.left='50%';
+  r.style.top='20%';
+  document.body.appendChild(r);
+}
+
+/* CELEBRATION */
+function startCelebration(){
+  if(!celebration){
+    celebration=setInterval(()=>{
+      firework();
+      heart();
+    },400);
+  }
+}
+
+function firework(){
+  const x=Math.random()*window.innerWidth;
+  const y=Math.random()*window.innerHeight;
+  for(let i=0;i<20;i++){
+    const s=document.createElement('div');
+    s.className='spark';
+    s.style.left=x+'px';
+    s.style.top=y+'px';
+    s.style.background=`hsl(${Math.random()*360},100%,60%)`;
+    s.style.setProperty('--x',(Math.random()*200-100)+'px');
+    s.style.setProperty('--y',(Math.random()*200-100)+'px');
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+  }
+}
+
+function heart(){
+  const h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='💖';
+  h.style.left=Math.random()*window.innerWidth+'px';
+  h.style.bottom='0';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),3000);
+}
+</script>
+
+</body>
+</html>
